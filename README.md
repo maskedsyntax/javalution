@@ -1,10 +1,28 @@
-# Javalution
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="assets/logo-white.png">
+    <source media="(prefers-color-scheme: light)" srcset="assets/logo.png">
+    <img alt="Javalution Logo" src="assets/logo.png" width="300">
+  </picture>
+</p>
 
-[![Java](https://img.shields.io/badge/Java-25-ED8B00?style=flat&logo=java&logoColor=white)](https://www.oracle.com/java/)
-[![JavaFX](https://img.shields.io/badge/JavaFX-23-blue?style=flat&logo=javafx&logoColor=white)](https://openjfx.io/)
-[![Gradle](https://img.shields.io/badge/Gradle-9.3.1-02303A?style=flat&logo=gradle&logoColor=white)](https://gradle.org/)
+<h1 align="center">Javalution</h1>
 
-Javalution is a high-performance Conway’s Game of Life simulator featuring a chunk-based grid for virtually infinite worlds, smooth zoom/pan rendering, and RLE pattern support.
+<p align="center">
+  <a href="https://www.oracle.com/java/">
+    <img src="https://img.shields.io/badge/Java-25-ED8B00?style=flat&logo=java&logoColor=white" alt="Java">
+  </a>
+  <a href="https://openjfx.io/">
+    <img src="https://img.shields.io/badge/JavaFX-23-blue?style=flat&logo=javafx&logoColor=white" alt="JavaFX">
+  </a>
+  <a href="https://gradle.org/">
+    <img src="https://img.shields.io/badge/Gradle-9.3.1-02303A?style=flat&logo=gradle&logoColor=white" alt="Gradle">
+  </a>
+</p>
+
+<p align="center">
+  Javalution is a high-performance Conway’s Game of Life simulator featuring a chunk-based grid for virtually infinite worlds, smooth zoom/pan rendering, and RLE pattern support.
+</p>
 
 ## Key Features
 - **Massive Grid:** Efficient chunk-based storage handles extremely large populations.
