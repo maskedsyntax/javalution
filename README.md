@@ -28,7 +28,13 @@ Javalution is a high-performance Conway’s Game of Life simulator featuring a c
 
 ### Prerequisites
 - Java 25 (OpenJDK)
-- Internet connection (for first-time Gradle/JavaFX dependency download)
+- **Java Version Management:** If you need to install or switch between Java versions, it is recommended to use [jvman](https://github.com/maskedsyntax/jvman).
+
+### Installation
+- **Linux (Debian/Ubuntu):** Download the `.deb` package from the [Releases](https://github.com/maskedsyntax/javalution/releases) page.
+- **Linux (Fedora/RHEL):** Download the `.rpm` package from the [Releases](https://github.com/maskedsyntax/javalution/releases) page.
+- **Arch Linux:** A `PKGBUILD` is available in the repository for building via `makepkg`.
+- **Other Platforms:** Please follow the "Build and Run" instructions below to run from source.
 
 ### Build and Run
 1. **Clone the repository:**
