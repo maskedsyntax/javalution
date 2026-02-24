@@ -84,7 +84,8 @@ public class GameController {
 
         canvas.setOnScroll(event -> {
             double oldZoom = renderer.getZoom();
-            renderer.setZoom(oldZoom * (event.getDeltaY() > 0 ? 1.1 : 0.9));
+            double factor = event.getDeltaY() > 0 ? 1.2 : 0.8;
+            renderer.setZoom(oldZoom * factor);
             renderer.render(engine.getCurrentGrid());
         });
 
@@ -117,6 +118,10 @@ public class GameController {
                 engine.resetGeneration();
             } else if (event.getCode() == KeyCode.R) {
                 randomizeGrid();
+            } else if (event.getCode() == KeyCode.EQUALS || event.getCode() == KeyCode.PLUS) {
+                renderer.setZoom(renderer.getZoom() * 1.2);
+            } else if (event.getCode() == KeyCode.MINUS) {
+                renderer.setZoom(renderer.getZoom() * 0.8);
             }
         });
     }

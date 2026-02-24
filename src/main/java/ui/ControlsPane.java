@@ -56,6 +56,9 @@ public class ControlsPane extends HBox {
         Button aboutBtn = new Button("About");
         aboutBtn.setOnAction(e -> showAbout());
 
+        CheckBox toroidalBox = new CheckBox("Wrap");
+        toroidalBox.setOnAction(e -> controller.getEngine().getCurrentGrid().setToroidal(toroidalBox.isSelected()));
+
         Slider speedSlider = new Slider(1, 1000, 100);
         speedSlider.setPrefWidth(200);
         speedSlider.valueProperty().addListener((obs, oldVal, newVal) -> {
@@ -65,6 +68,7 @@ public class ControlsPane extends HBox {
         this.getChildren().addAll(
                 playPauseBtn, stepBtn, clearBtn, randomBtn,
                 loadBtn, saveBtn, aboutBtn,
+                new Label("Toroidal:"), toroidalBox,
                 new Label("Speed:"), speedSlider
         );
     }

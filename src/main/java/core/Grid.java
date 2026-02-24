@@ -7,16 +7,24 @@ import java.util.Set;
 public class Grid {
     private final Map<Long, WorldChunk> chunks = new HashMap<>();
     private boolean toroidal = false;
-    private long width = Long.MAX_VALUE;
-    private long height = Long.MAX_VALUE;
+    private long width = 1024;
+    private long height = 1024;
+
+    public boolean isToroidal() {
+        return toroidal;
+    }
 
     public void setToroidal(boolean toroidal) {
         this.toroidal = toroidal;
     }
 
-    public boolean isToroidal() {
-        return toroidal;
+    public void setDimensions(long width, long height) {
+        this.width = width;
+        this.height = height;
     }
+
+    public long getWidth() { return width; }
+    public long getHeight() { return height; }
 
     public void setCell(long x, long y, boolean alive) {
         if (toroidal) {

@@ -1,0 +1,4 @@
+#C Gosper Glider Gun
+x = 36, y = 9, rule = B3/S23
+24bo11b$22bobo11b$12b2o6b2o12b2o$11bo3bo4b2o12b2o$2b2o7bo5bo7b2o11b$2b2o
+7bo3bobo4b2o11b$12bo5bo18b$13bo3bo19b$14b2o!

@@ -1,6 +1,6 @@
 # Maintainer: maskedsyntax <https://github.com/maskedsyntax>
 pkgname=javalution
-pkgver=1.0.1
+pkgver=1.0.2
 pkgrel=1
 pkgdesc="High-performance Conway’s Game of Life simulator in JavaFX"
 arch=('any')
@@ -18,7 +18,7 @@ build() {
 
 package() {
   cd "$pkgname-$pkgver"
-  install -Dm644 "build/libs/$pkgname-1.0.1.jar" "$pkgdir/usr/share/java/$pkgname/$pkgname.jar"
+  install -Dm644 "build/libs/$pkgname-1.0.2.jar" "$pkgdir/usr/share/java/$pkgname/$pkgname.jar"
   
   # Create a runner script
   mkdir -p "$pkgdir/usr/bin"
