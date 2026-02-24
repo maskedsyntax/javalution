@@ -11,12 +11,11 @@ repositories {
 }
 
 javafx {
-    version = '24-ea+11' // latest stable or upcoming for Java 25
+    version = '23'
     modules = [ 'javafx.controls', 'javafx.fxml' ]
 }
 
 application {
-    mainModule = 'javalution'
     mainClass = 'ui.Main'
 }
 

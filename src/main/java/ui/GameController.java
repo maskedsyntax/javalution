@@ -7,22 +7,33 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.MouseButton;
+
 public class GameController {
     private final SimulationEngine engine;
     private final CanvasRenderer renderer;
     private final Canvas canvas;
     private final BorderPane root;
+    private final StatusBar statusBar;
+
+    private long lastFrameTime = 0;
+    private int frameCount = 0;
+    private int fps = 0;
 
     public GameController(BorderPane root) {
         this.root = root;
         this.engine = new SimulationEngine(new Grid());
         this.canvas = new Canvas();
         this.renderer = new CanvasRenderer(canvas);
+        this.statusBar = new StatusBar();
 
         setupCanvas();
         setupControls();
         setupInteraction();
         startRenderingLoop();
+        
+        root.setBottom(statusBar);
     }
 
     private void setupCanvas() {
@@ -43,14 +54,30 @@ public class GameController {
     }
 
     private void setupInteraction() {
+        canvas.setFocusTraversable(true);
         canvas.setOnMouseClicked(event -> {
+            canvas.requestFocus();
             long gridX = renderer.screenToGridX(event.getX());
             long gridY = renderer.screenToGridY(event.getY());
             
-            if (event.getButton() == javafx.scene.input.MouseButton.PRIMARY) {
+            if (event.getButton() == MouseButton.PRIMARY) {
                 engine.getCurrentGrid().setCell(gridX, gridY, true);
-            } else if (event.getButton() == javafx.scene.input.MouseButton.SECONDARY) {
+            } else if (event.getButton() == MouseButton.SECONDARY) {
                 engine.getCurrentGrid().setCell(gridX, gridY, false);
+            }
+            renderer.render(engine.getCurrentGrid());
+        });
+
+        canvas.setOnMouseDragged(event -> {
+            long gridX = renderer.screenToGridX(event.getX());
+            long gridY = renderer.screenToGridY(event.getY());
+            
+            if (event.getButton() == MouseButton.PRIMARY) {
+                engine.getCurrentGrid().setCell(gridX, gridY, true);
+            } else if (event.getButton() == MouseButton.SECONDARY) {
+                engine.getCurrentGrid().setCell(gridX, gridY, false);
+            } else if (event.getButton() == MouseButton.MIDDLE) {
+                // Should use the pressed/dragged logic for panning instead
             }
             renderer.render(engine.getCurrentGrid());
         });
@@ -61,31 +88,71 @@ public class GameController {
             renderer.render(engine.getCurrentGrid());
         });
 
-        // Mouse drag panning
+        // Mouse middle-drag panning
         final double[] lastX = new double[1];
         final double[] lastY = new double[1];
         canvas.setOnMousePressed(event -> {
-            if (event.getButton() == javafx.scene.input.MouseButton.MIDDLE) {
+            if (event.getButton() == MouseButton.MIDDLE) {
                 lastX[0] = event.getX();
                 lastY[0] = event.getY();
             }
         });
 
-        canvas.setOnMouseDragged(event -> {
-            if (event.getButton() == javafx.scene.input.MouseButton.MIDDLE) {
+        canvas.addEventHandler(javafx.scene.input.MouseEvent.MOUSE_DRAGGED, event -> {
+            if (event.getButton() == MouseButton.MIDDLE) {
                 renderer.pan(event.getX() - lastX[0], event.getY() - lastY[0]);
                 lastX[0] = event.getX();
                 lastY[0] = event.getY();
                 renderer.render(engine.getCurrentGrid());
             }
         });
+
+        canvas.setOnKeyPressed(event -> {
+            if (event.getCode() == KeyCode.SPACE) {
+                if (engine.isRunning()) engine.stop(); else engine.start();
+            } else if (event.getCode() == KeyCode.S) {
+                engine.step();
+            } else if (event.getCode() == KeyCode.C) {
+                engine.getCurrentGrid().clear();
+                engine.resetGeneration();
+            } else if (event.getCode() == KeyCode.R) {
+                randomizeGrid();
+            }
+        });
+    }
+
+    private void randomizeGrid() {
+        Grid grid = engine.getCurrentGrid();
+        grid.clear();
+        engine.resetGeneration();
+        java.util.Random random = new java.util.Random();
+        for (int x = 0; x < 100; x++) {
+            for (int y = 0; y < 100; y++) {
+                if (random.nextDouble() < 0.2) {
+                    grid.setCell(x, y, true);
+                }
+            }
+        }
     }
 
     private void startRenderingLoop() {
         new AnimationTimer() {
             @Override
             public void handle(long now) {
+                if (lastFrameTime > 0) {
+                    long elapsedNanos = now - lastFrameTime;
+                    if (elapsedNanos > 1e9) {
+                        fps = frameCount;
+                        frameCount = 0;
+                        lastFrameTime = now;
+                    }
+                    frameCount++;
+                } else {
+                    lastFrameTime = now;
+                }
+
                 renderer.render(engine.getCurrentGrid());
+                statusBar.update(engine.getGeneration(), engine.getPopulation(), renderer.getZoom(), fps);
             }
         }.start();
     }

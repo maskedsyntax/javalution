@@ -32,7 +32,7 @@ public class RLEParser {
     }
 
     private static void parseRLEData(String data, Grid grid) {
-        Pattern pattern = Pattern.compile("(\d*)([bo$!])");
+        Pattern pattern = Pattern.compile("(\\d*)([bo$!])");
         Matcher matcher = pattern.matcher(data);
 
         int currentX = 0;

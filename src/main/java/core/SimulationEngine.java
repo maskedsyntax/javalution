@@ -12,6 +12,7 @@ public class SimulationEngine {
     private final ExecutorService executor = ThreadPoolManager.getExecutor();
     private boolean running = false;
     private int speed = 100; // Delay in ms
+    private long generation = 0;
 
     public SimulationEngine(Grid initialGrid) {
         this.currentGrid = initialGrid;
@@ -55,6 +56,30 @@ public class SimulationEngine {
         currentGrid = nextGrid;
         nextGrid = temp;
         nextGrid.clear();
+        generation++;
+    }
+
+    public long getGeneration() {
+        return generation;
+    }
+
+    public void resetGeneration() {
+        generation = 0;
+    }
+
+    public int getPopulation() {
+        int pop = 0;
+        for (long key : currentGrid.getActiveChunkKeys()) {
+            WorldChunk chunk = currentGrid.getChunk(key);
+            if (chunk != null) {
+                pop += chunk.getLiveCells();
+            }
+        }
+        return pop;
+    }
+
+    public boolean isRunning() {
+        return running;
     }
 
     private void processChunk(long key) {
