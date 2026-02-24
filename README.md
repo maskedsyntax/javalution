@@ -18,11 +18,18 @@ Javalution is a high-performance Conway’s Game of Life simulator featuring a c
 | **Draw/Place Cell** | Left Click / Drag |
 | **Erase Cell** | Right Click / Drag |
 | **Pan Camera** | Middle Click + Drag |
-| **Zoom** | Scroll Wheel |
+| **Zoom** | Scroll Wheel / `+` / `-` |
 | **Play/Pause** | `Space` |
 | **Step Forward** | `S` |
 | **Clear Grid** | `C` |
 | **Randomize** | `R` |
+
+## Pattern Library
+A set of example `.rle` patterns is included in the `patterns/` directory. You can load these using the **Load RLE** button in the application.
+
+- `glider.rle`
+- `pulsar.rle`
+- `gosper_glider_gun.rle`
 
 ## Getting Started
 

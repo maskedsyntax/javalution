@@ -110,11 +110,23 @@ public class SimulationEngine {
 
     private int countNeighbors(long gx, long gy) {
         int count = 0;
+        boolean toroidal = currentGrid.isToroidal();
+        long width = currentGrid.getWidth();
+        long height = currentGrid.getHeight();
+
         for (int dx = -1; dx <= 1; dx++) {
             for (int dy = -1; dy <= 1; dy++) {
                 if (dx == 0 && dy == 0) continue;
-                if (currentGrid.getCell(gx + dx, gy + dy)) {
-                    count++;
+                
+                long nx = gx + dx;
+                long ny = gy + dy;
+                
+                if (toroidal) {
+                    nx = (nx % width + width) % width;
+                    ny = (ny % height + height) % height;
+                    if (currentGrid.getCell(nx, ny)) count++;
+                } else {
+                    if (currentGrid.getCell(nx, ny)) count++;
                 }
             }
         }
