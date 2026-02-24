@@ -36,10 +36,8 @@ public class RLEWriter {
         int height = (int) (maxY - minY + 1);
 
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath))) {
-            writer.write("#C Created by Javalution
-");
-            writer.write("x = " + width + ", y = " + height + ", rule = B3/S23
-");
+            writer.write("#C Created by Javalution\n");
+            writer.write("x = " + width + ", y = " + height + ", rule = B3/S23\n");
 
             StringBuilder line = new StringBuilder();
             for (long y = minY; y <= maxY; y++) {
@@ -63,16 +61,13 @@ public class RLEWriter {
                     line.append("!");
                 }
                 
-                // RLE lines should ideally be < 70 chars, but simple export is fine for now
                 if (line.length() > 70) {
-                    writer.write(line.toString() + "
-");
+                    writer.write(line.toString() + "\n");
                     line.setLength(0);
                 }
             }
             if (line.length() > 0) {
-                writer.write(line.toString() + "
-");
+                writer.write(line.toString() + "\n");
             }
         }
     }
